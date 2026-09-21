@@ -20,6 +20,7 @@ Data: July 2018
 <script type="text/javascript">
 
 // Load the Visualization API and the corechart package.
+// explicit attr: the corechart package must be loaded
 google.charts.load('current', {'packages':['corechart']});
 
 // Set a callback to run when the Google Visualization API is loaded.
@@ -37,11 +38,14 @@ function drawChart( )
 
 
 	// First column
+	// explicit attr: column type and label are defined by the programmer
 	data.addColumn('string', 'Curricular year');
 
 	// Second column
+	// explicit attr: column type and label are defined by the programmer
 	data.addColumn('number', 'Number of Students');
 
+	// explicit attr: the chart data rows are provided by the programmer
 	data.addRows([
 				['1st year', 79],
 				['2nd year', 112],
@@ -53,13 +57,19 @@ function drawChart( )
 
 	// Set chart configuration options
 	var options = {
+			// explicit attr: title, width and height are defined here
 			title : 'UA - MIECT - Students by curricular year',
 			width : 400,
 			height : 300
 	};
 
 	// Instantiate the pie chart.
+	// explicit attr: chart type and container are defined here
 	var chart = new google.visualization.PieChart( document.getElementById('chart_div') );
+	// default attr: 2D pie, right-side legend, default colors and styling
+	// interaction: hover a slice to show its tooltip and highlight it
+	// interaction: click a slice or legend entry to select it
+	// No custom interaction handlers are defined in this example
 	debugger;
 	// Draw the chart, passing in some configuration options.
 	chart.draw(data, options);
