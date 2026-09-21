@@ -35,37 +35,120 @@ function drawChart( )
 
 	// Create the data table.
 	var data = new google.visualization.DataTable( );
-
-
+	var deti = new google.visualization.DataTable( );
+	var deti_combo = new google.visualization.DataTable( );
+	
 	// First column
 	// explicit attr: column type and label are defined by the programmer
 	data.addColumn('string', 'Curricular year');
+	deti.addColumn('string', 'Curricular year');
+	deti_combo.addColumn('string', 'Curricular year');
 
 	// Second column
 	// explicit attr: column type and label are defined by the programmer
 	data.addColumn('number', 'Number of Students');
+	deti.addColumn('number', 'Students MIEET');
+	deti.addColumn('number', 'Students MIECT');
+	deti.addColumn('number', 'Students LTSI');
+	deti.addColumn('number', 'Students LEI');
+
+	deti_combo.addColumn('number', 'Students MIEET');
+	deti_combo.addColumn('number', 'Students MIECT');
+	deti_combo.addColumn('number', 'Students LTSI');
+	deti_combo.addColumn('number', 'Students LEI');
+	deti_combo.addColumn('number', 'Total Students');
 
 	// explicit attr: the chart data rows are provided by the programmer
 	data.addRows([
-				['1st year', 79],
-				['2nd year', 112],
-				['3rd year', 68],
-				['4th year', 62],
-				['5th year', 83]
+		['1st year', 79],
+		['2nd year', 112],
+		['3rd year', 68],
+		['4th year', 62],
+		['5th year', 83]
+	]);
 
+	deti.addRows([
+		['2007', 328, 589, 115, 0],
+		['2008', 361, 605, 223, 0],
+		['2009', 400, 365, 152, 0], 
+		['2010', 360, 357, 129, 0],
+		['2011', 325, 316, 96, 0],
+		['2012', 394, 344, 93, 0],
+		['2013', 404, 294, 102, 0],
+		['2014', 271, 307, 0, 501],
+		['2015', 402, 291, 0, 843],
+		['2016', 367, 337, 0, 802],
+		['2017', 407, 399, 0, 691] 
+	]);
+
+	deti_combo.addRows([
+		['2007', 328, 589, 115, 0, 831],
+		['2008', 361, 605, 223, 0, 972],
+		['2009', 400, 365, 152, 0, 755], 
+		['2010', 360, 357, 129, 0, 678],
+		['2011', 325, 316, 96, 0, 581],
+		['2012', 394, 344, 93, 0, 653],
+		['2013', 404, 294, 102, 0, 622],
+		['2014', 271, 307, 0, 501, 780],
+		['2015', 402, 291, 0, 843, 1164],
+		['2016', 367, 337, 0, 802, 1175],
+		['2017', 407, 399, 0, 691, 1147]
 	]);
 
 	// Set chart configuration options
 	var options = {
-			// explicit attr: title, width and height are defined here
-			title : 'UA - MIECT - Students by curricular year',
-			width : 400,
-			height : 300
+		// explicit attr: title, width and height are defined here
+		title : 'UA - MIECT - Students by curricular year',
+		width : 400,
+		height : 300
+	};
+
+	var options_3d = {
+		// explicit attr: title, width and height are defined here
+		title : 'UA - MIECT - Students by curricular year',
+		width : 800,
+		height : 600,
+		is3D : true
+	};
+
+	var options_bar = {
+		// explicit attr: title, width and height are defined here
+		title : 'UA - MIECT - Students by curricular year',
+		width : 800,
+		height : 600
+	};
+
+	var deti_options_bar = {
+		// explicit attr: title, width and height are defined here
+		title : 'UA - DETI - Candidates by curricular year',
+		width : 800,
+		height : 600
+	};
+
+	var deti_options_combo = {
+		// explicit attr: title, width and height are defined here
+		title : 'UA - DETI - Candidates by curricular year',
+		width : 800,
+		height : 600,
+		seriesType: 'bars',
+		series: {4: {type: 'line'}}
 	};
 
 	// Instantiate the pie chart.
 	// explicit attr: chart type and container are defined here
 	var chart = new google.visualization.PieChart( document.getElementById('chart_div') );
+	// 3d pie char
+	var chart_3 = new google.visualization.PieChart( document.getElementById('chart_div_3d') );
+	// bar chart
+	var chart_bar = new google.visualization.BarChart( document.getElementById('chart_div_bar') );
+	// column chart
+	var chart_col = new google.visualization.ColumnChart( document.getElementById('chart_div_col') );
+
+	// deti
+	var deti_chart_bar = new google.visualization.BarChart( document.getElementById('deti_chart_div_bar') );
+	var deti_chart_col = new google.visualization.ColumnChart( document.getElementById('deti_chart_div_col') );
+	var deti_chart_line = new google.visualization.LineChart( document.getElementById('deti_chart_div_line') );
+	var deti_chart_combo = new google.visualization.ComboChart( document.getElementById('deti_chart_div_combo') );
 	// default attr: 2D pie, right-side legend, default colors and styling
 	// interaction: hover a slice to show its tooltip and highlight it
 	// interaction: click a slice or legend entry to select it
@@ -73,6 +156,13 @@ function drawChart( )
 	debugger;
 	// Draw the chart, passing in some configuration options.
 	chart.draw(data, options);
+	chart_3.draw(data, options_3d);
+	chart_bar.draw(data, options_bar);
+	chart_col.draw(data, options_bar);
+	deti_chart_bar.draw(deti, deti_options_bar);
+	deti_chart_col.draw(deti, deti_options_bar);
+	deti_chart_line.draw(deti, deti_options_bar);
+	deti_chart_combo.draw(deti_combo, deti_options_combo);
 
 } // drawChart( )
 
@@ -82,6 +172,14 @@ function drawChart( )
 <body>
 <!--Div that will hold the pie chart-->
 <div id="chart_div" style="width:400; height:300"></div>
+<div id="chart_div_3d" style="width:800; height:600"></div>
+<div id="chart_div_bar" style="width:800; height:600"></div>
+<div id="chart_div_col" style="width:800; height:600"></div>
+<!--Deti chart-->
+<div id="deti_chart_div_bar" style="width:800; height:600"></div>
+<div id="deti_chart_div_col" style="width:800; height:600"></div>
+<div id="deti_chart_div_line" style="width:800; height:600"></div>
+<div id="deti_chart_div_combo" style="width:800; height:600"></div>
 </body>
 
 </html>
