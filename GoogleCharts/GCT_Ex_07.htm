@@ -40,6 +40,11 @@ Data: July 2018
 
             // this new DataTable object holds all the data
             var data = new google.visualization.arrayToDataTable(arrayData);
+            var result = google.visualization.data.group(
+            	data,
+            	[8],
+            	[{'column': 0, 'aggregation' : google.visualization.data.sum, 'type' : 'number'}]
+            );
 
             // this view can select a subset of the data at a time
             var view = new google.visualization.DataView(data);
@@ -53,9 +58,22 @@ Data: July 2018
                 legend: 'none'
             };
 
+            var line_options = {
+                title: "World Cup attendance",
+                hAxis: {title: data.getColumnLabel(8), minValue: data.getColumnRange(8).min, maxValue: data.getColumnRange(8).max},
+                vAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min, maxValue: data.getColumnRange(0).max},
+                legend: 'none',
+                markers: {style: 'circle', size: 5},
+                lineWidth: 2
+            };
+
             // create the chart object and draw it
             var chart = new google.visualization.ScatterChart(document.getElementById('id_chart'));
             chart.draw(view, options);
+            var bar_chart = new google.visualization.ColumnChart(document.getElementById('result_chart'));
+            bar_chart.draw(result, options);
+            var line_chart = new google.visualization.LineChart(document.getElementById('result_line_chart'));
+            line_chart.draw(result, line_options);
         });
     }
     </script>
@@ -63,5 +81,7 @@ Data: July 2018
 </head>
 <body style="font-family: Arial;border: 0 none;">
     <div id="id_chart" style="width: 600px; height: 400px;"></div>
+    <div id="result_chart" style="width: 600px; height: 400px;"></div>
+    <div id="result_line_chart" style="width: 600px; height: 400px;"></div>
 </body>
 </html>
