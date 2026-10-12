@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>First D3 Example</title>
+        <script type="text/javascript" src="http://d3js.org/d3.v7.min.js"></script>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            let dataset = [ 5, 10, 15, 20, 25, 30 ];
+            let count = d3.max(dataset) + 5;
+            d3.select("body").selectAll("p")
+                .data(dataset)
+                .join("p")
+                    .text(function (d) {return "I can count up to " + d;})
+                    .style("color", function(d) {
+                        if (d > 15) {
+                            return "red";
+                        } else {
+                            return "black";
+                        }
+                    })
+                    .style("font-size", function(d) {
+                        count = count - 5;
+                        return count + "px";
+                    });
+        </script>
+    </body>
+
+</html>
